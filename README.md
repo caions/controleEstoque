@@ -13,8 +13,7 @@ $ node app.js
 ### As rotas são:
 ```sh
 Usuario:
-$ localhost:5050/user/loja
+http://localhost:5050/user/loja
 Administrador 
-$ localhost:5050/admin/produtos
-
+http://localhost:5050/admin/produtos
 ```
