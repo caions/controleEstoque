@@ -1,0 +1,26 @@
+{{#each erros}}
+<div class="alert alert-danger">{{texto}}</div>
+{{else}}
+
+{{/each}}
+
+<h2>Produtos na loja</h2>
+<a href="/user/carrinho"><button class="btn btn-secondary mb-4">Ir para o carrinho</button></a>
+<hr>
+
+{{#each produtos}}
+
+<div class="card bg-light mb-3 ml-5 d-inline-flex" style="max-width: 18rem;">
+    <div class="card-body">
+        <h4>{{nome}}</h4>
+        <small>Disponível: {{quantidade}}</small><br>
+        <small>Preço: R$ {{preco}}</small><br>
+        <a href="/user/loja/add/{{_id}}">
+            <div class="btn btn-success mt-4">Adicionar no carrinho</div>
+        </a>
+    </div>
+</div>
+{{else}}
+<p class="h4 mt-3">Nenhum produto disponivel na loja</p>
+
+{{/each}}

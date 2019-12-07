@@ -1,0 +1,25 @@
+{{#each erros}}
+<div class="alert alert-danger">{{texto}}</div>
+{{else}}
+
+{{/each}}
+
+<h2>Produtos no Carrinho</h2>
+<a href="/user/loja"><button class="btn btn-secondary mb-4">Voltar as compras</button></a>
+<hr>
+{{#each produtos}}
+
+<div class="card bg-light mb-3 ml-5 d-inline-flex" style="max-width: 18rem;">
+    <div class="card-body">
+        <h4>{{nome}}</h4>
+        <small>Quantidade: {{quantidade}}</small><br>
+        <small>Preço: R$ {{preco}}</small><br>
+    </div>
+    <form action="carrinho/deletar" method="post">
+            <input type="hidden" name="id" value="{{_id}}">
+            <button type="submit" class="btn btn-primary ml-3 mb-3">Efetuar a compra</button>
+    </form>
+</div>
+{{else}}
+<p class="h4 mt-3">Seu carrinho está vazio</p>
+{{/each}}

@@ -1,0 +1,105 @@
+const express = require('express')
+const router = express.Router()
+const mongoose = require('mongoose') //carrega o modulo monggose
+require("../models/produto") // importa a tabela produto da pasta models
+require("../models/carrrinho")
+const Produto = mongoose.model("produtos") // atribui a constante produto a tabela produtos
+const Carrinho = mongoose.model("carrinho")
+
+// Ver produtos da loja
+router.get('/loja', (req, res) => {
+    Produto.find().sort({ date: 'desc' }).then((produtos) => {
+        res.render('user/loja', { produtos: produtos })
+    }).catch((erro) => {
+        req.flash("error_msg", "Houve um erro")
+        res.redirect('/user')
+    })
+})
+
+//Ver produtos do carrinho
+router.get('/carrinho', (req, res) => {
+    Carrinho.find().sort({ date: 'desc' }).then((produtos) => {
+        res.render('user/carrinho', { produtos: produtos })
+    }).catch((erro) => {
+        req.flash("error_msg", "Houve um erro")
+        res.redirect('/user')
+    })
+})
+
+router.get('/loja/add', (req, res) => {
+    res.render('admin/addprodutos')
+})
+
+
+//formulario de compra
+router.get('/loja/add/:id', (req, res) => {
+    Produto.findOne({ _id: req.params.id }).then((produto) => {
+
+        res.render('user/add', { produto: produto })
+    }).catch((erro) => {
+        req.flash("error_msg", 'Esse produto não existe')
+        res.redirect('/user/loja')
+    })
+})
+
+//adicionar no carrinho
+router.post('/loja/add', (req, res) => {
+    Produto.findOne({ _id: req.body.id }).then((produto) => {
+        var quantidade = produto.quantidade
+        produto.quantidade = quantidade - req.body.quantidade
+        var erros = [];
+        const novoProduto = {
+            nome: produto.nome,
+            quantidade: req.body.quantidade,
+            preco: produto.preco * req.body.quantidade
+        }
+
+        if (!req.body.quantidade || typeof req.body.quantidade == undefined || req.body.quantidade == null || req.body.quantidade <= 0) {
+            erros.push({ texto: "Insira uma quantidade maior que 0" })
+        }
+
+        if (quantidade == 0) {
+            erros.push({ texto: `Não temos o produto selecionado no estoque` })
+        }
+        if (req.body.quantidade > quantidade) {
+            erros.push({ texto: `No momento temos ${quantidade} no estoque` })
+        }
+
+        if (req.body.quantidade.length <= 0) {
+            erros.push({ texto: "Insira a quantidade que deseja add" })
+        }
+
+        if (erros.length > 0) {
+            res.render("user/add", { erros: erros })
+
+        } else {
+            //adiciona o produto ao carrinho
+            new Carrinho(novoProduto).save()
+            //atualiza o estoque
+            produto.save().then(() => {
+                req.flash('success_msg', `${produto.nome} adionado(a) ao carrinho`)
+                res.redirect('/user/loja')
+            }).catch((erro) => {
+                req.flash('error_msg', "Erro ao add o produto")
+                res.redirect('/user/loja')
+            })
+        }
+       
+    }).catch((erro) => {
+        req.flash('error_msg', "Houve um erro ao adicionar o produto")
+        res.redirect('/user/loja')
+    })
+})
+
+//delete
+router.post('/carrinho/deletar',(req,res)=>{
+    Carrinho.remove({_id:req.body.id}).then(()=>{
+        req.flash('success_msg', "Parabéns compra efetuada com sucesso")
+        res.redirect('/user/carrinho')
+    }).catch((erro)=>{
+        req.flash('error_msg','Erro ao efetuar a compra tente novamente')
+        res.redirect('/user/carrinho')
+    })
+})
+
+module.exports = router
