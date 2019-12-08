@@ -41,9 +41,14 @@ const PORT = 5050;
    //public
    app.use(express.static(path.join(__dirname,"public")))
 
- //rotas
+   //rotas
     app.use('/admin',admin)
     app.use('/user',user)
+    //redirecionar para a pagina de usuario
+    app.get('/',(req,res)=>{
+       res.redirect('/user/loja')
+    })
+
 
  //outros
 app.listen(PORT,()=>console.log('Servidor rodando na porta '+PORT))
