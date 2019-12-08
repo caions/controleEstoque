@@ -141,7 +141,7 @@ router.get('/loja/add', (req, res) => {
 
 
 //formulario de compra
-router.get('/loja/add/:id', (req, res) => {
+router.get('/loja/add/:id', logado,(req, res) => {
     Produto.findOne({ _id: req.params.id }).then((produto) => {
 
         res.render('user/add', { produto: produto })
@@ -152,7 +152,7 @@ router.get('/loja/add/:id', (req, res) => {
 })
 
 //adicionar no carrinho
-router.post('/loja/add', (req, res) => {
+router.post('/loja/add', logado,(req, res) => {
     Produto.findOne({ _id: req.body.id }).then((produto) => {
         var quantidade = produto.quantidade
         produto.quantidade = quantidade - req.body.quantidade
@@ -201,7 +201,7 @@ router.post('/loja/add', (req, res) => {
 })
 
 //delete
-router.post('/carrinho/deletar',(req,res)=>{
+router.post('/carrinho/deletar', logado,(req,res)=>{
     Carrinho.remove({_id:req.body.id}).then(()=>{
         req.flash('success_msg', "Parabéns compra efetuada com sucesso")
         res.redirect('/user/carrinho')
