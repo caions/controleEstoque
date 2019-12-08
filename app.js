@@ -42,7 +42,7 @@ const PORT = process.env.PORT || 5050;
    app.set('view engine', 'handlebars');
 
    //mongoose
-   mongoose.connect('mongodb+srv://caiosantos:<caiosantos>@cluster0-4kq1d.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true,useUnifiedTopology: true});
+   mongoose.connect('mongodb+srv://caiosantos:caiosantos@cluster0-4kq1d.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true,useUnifiedTopology: true});
 
    //public
    app.use(express.static(path.join(__dirname,"public")))
