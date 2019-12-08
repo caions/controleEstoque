@@ -8,6 +8,7 @@ const Produto = mongoose.model("produtos") // atribui a constante produto a tabe
 const Carrinho = mongoose.model("carrinho")
 const Usuario = mongoose.model("usuarios")
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
 
 // ROTAS DE LOGIN
 
@@ -86,6 +87,15 @@ router.post('/registro',(req,res)=>{
 //formulario de login
 router.get('/login',(req,res)=>{
     res.render('usuarios/login')
+})
+
+router.post('/login',(req,res,next)=>{
+
+    passport.authenticate('local',{
+        successRedirect:'/',
+        failureRedirect: '/user/login',
+        failureFlash: true
+    })(req,res,next)
 })
 
 
