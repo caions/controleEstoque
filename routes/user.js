@@ -9,6 +9,7 @@ const Carrinho = mongoose.model("carrinho")
 const Usuario = mongoose.model("usuarios")
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const {logado}= require('../helpers/logado')
 
 // ROTAS DE LOGIN
 
@@ -125,7 +126,7 @@ router.get('/',(req,res)=>{
 })
 
 //Ver produtos do carrinho
-router.get('/carrinho', (req, res) => {
+router.get('/carrinho', logado,(req, res) => {
     Carrinho.find().sort({ date: 'desc' }).then((produtos) => {
         res.render('user/carrinho', { produtos: produtos })
     }).catch((erro) => {
