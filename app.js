@@ -51,7 +51,7 @@ const PORT = 5050;
     app.use('/user',user)
     //redirecionar para a pagina de usuario
     app.get('/',(req,res)=>{
-       res.redirect('/user/loja')
+       res.redirect('/user/')
     })
 
 

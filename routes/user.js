@@ -66,7 +66,7 @@ router.post('/registro',(req,res)=>{
 
                         novoUsuario.save().then(()=>{
                             req.flash("success_msg", "Usuario criado com sucesso")
-                            res.redirect("/")
+                            res.redirect("/user/login")
                         }).catch((erro)=>{
                             req.flash("error_msg","Houve um erro ao criar o usuario, tente novamente")
                             res.redirect('/user/registro')
@@ -92,7 +92,7 @@ router.get('/login',(req,res)=>{
 router.post('/login',(req,res,next)=>{
 
     passport.authenticate('local',{
-        successRedirect:'/',
+        successRedirect:'/user/loja',
         failureRedirect: '/user/login',
         failureFlash: true
     })(req,res,next)
@@ -113,12 +113,16 @@ router.get('/logout',(req,res)=>{
 
     req.logOut()
     req.flash('success_msg',"Deslogado com sucesso!")
-    res.redirect('/user/loja')
+    res.redirect('/')
     
 })
 
 
 // ROTAS DA LOJA
+
+router.get('/',(req,res)=>{
+    res.render('user/home')
+})
 
 //Ver produtos do carrinho
 router.get('/carrinho', (req, res) => {
