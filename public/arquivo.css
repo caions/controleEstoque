@@ -48,6 +48,7 @@ div#carrinho img {
 div#logo {
     width: 180px;
     float: left;
+    margin: auto;
 }
 
 
@@ -192,6 +193,12 @@ button.css3button {
 		0px 1px 0px rgba(255,255,255,0.3);
 }
 
+img {
+    width: 150px;
+    margin-top: -28px;
+    margin-bottom: -18px;
+}
+
 /* nav bar css */
 
 #flipkart-navbar {
@@ -199,11 +206,13 @@ button.css3button {
     color: #FFFFFF;
 }
 
-
-.row.row1 {
-    padding-top: 10px;
-    padding-right: 170px;
+.row.row1{
     display: block;
+}
+
+.row1{
+    padding-top: 10px;
+    padding-right: 50px;
 }
 
 .row2 {
@@ -216,7 +225,6 @@ button.css3button {
     border: 0 none;
     outline: 0 none;
     font-size: 15px;
-    color: black;
 }
 
 .flipkart-navbar-button {
@@ -225,7 +233,7 @@ button.css3button {
     border-radius: 0 2px 2px 0;
     color: #565656;
     padding: 10px 0;
-    height: auto;
+    height: 43px;
     cursor: pointer;
 }
 
@@ -270,7 +278,6 @@ button.css3button {
     color: #fff;
     line-height: 12px;
     margin-left: 10px;
-    display: none;
 }
 
 .upper-links {
@@ -370,8 +377,45 @@ button.css3button {
     }
 }
 
-img {
-    width: 150px;
-    margin-top: -28px;
-    margin-bottom: -18px;
+/*Sidenav*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    box-shadow: 0 4px 8px -3px #555454;
+    padding-top: 0px;
 }
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: #fff;        
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav a {font-size: 18px;}
+}
+
+.sidenav-heading{
+    font-size: 36px;
+    color: #fff;
+}
+
