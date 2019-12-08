@@ -2,7 +2,7 @@
 
 ### Link do site no heroku (novo!)
 ```sh
-https://blooming-fjord-39351.herokuapp.com/user/
+http://pedrocaioeletronics.herokuapp.com
 ```
 
 ### Instalar os modulos:
