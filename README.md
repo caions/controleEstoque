@@ -7,7 +7,7 @@ $ npm install
 
 ### Rodar a aplicação:
 ```sh
-$ node app.js
+$ npm start
 ```
 
 ### As rotas são:
