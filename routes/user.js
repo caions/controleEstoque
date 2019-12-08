@@ -109,6 +109,17 @@ router.get('/loja', (req, res) => {
     })
 })
 
+router.get('/logout',(req,res)=>{
+
+    req.logOut()
+    req.flash('success_msg',"Deslogado com sucesso!")
+    res.redirect('/user/loja')
+    
+})
+
+
+// ROTAS DA LOJA
+
 //Ver produtos do carrinho
 router.get('/carrinho', (req, res) => {
     Carrinho.find().sort({ date: 'desc' }).then((produtos) => {

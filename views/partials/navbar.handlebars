@@ -5,7 +5,8 @@
                     <div class="row row1">
                         <ul class="largenav pull-right">
                             {{#if user}}
-
+                             <a> Bem vindo! {{user.nome}}</a> 
+                             <a href="/user/logout">Deslogar</a>
                             {{else}}
                             <li class="upper-links">
                                 <div id="login">
