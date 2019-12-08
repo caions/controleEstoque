@@ -11,7 +11,8 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
 require('./config/auth')(passport)
-const PORT = 5050;
+const db =require('./config/db')
+const PORT = process.env.PORT || 5050;
 
 //config 
    //sessão
@@ -41,7 +42,7 @@ const PORT = 5050;
    app.set('view engine', 'handlebars');
 
    //mongoose
-   mongoose.connect('mongodb://localhost/blog', {useNewUrlParser: true,useUnifiedTopology: true});
+   mongoose.connect(db.mongoURI, {useNewUrlParser: true,useUnifiedTopology: true});
 
    //public
    app.use(express.static(path.join(__dirname,"public")))
