@@ -7,10 +7,11 @@ require("../models/usuario")
 const Produto = mongoose.model("produtos") // atribui a constante produto a tabela produtos
 const Carrinho = mongoose.model("carrinho")
 const Usuario = mongoose.model("usuarios")
+const bcrypt = require('bcryptjs')
 
 // ROTAS DE LOGIN
 
-//formulario login
+//formulario registro
 router.get('/registro',(req,res)=>{
     res.render('usuarios/registro')
 })
@@ -41,9 +42,50 @@ router.post('/registro',(req,res)=>{
     if(erros.length > 0){
         res.render("usuarios/registro",{erros:erros})
     }else{
+        Usuario.findOne({email: req.body.email}).then((usuario)=>{
+            if(usuario){
+                req.flash("error_msg","Já existe um conta com esse email no nosso sistema")
+                res.redirect("/user/registro")
+            }else{
+                const novoUsuario = new Usuario({
+                    nome: req.body.nome,
+                    email: req.body.email,
+                    senha: req.body.senha
+                })
 
+                // hacheando a senha
+                bcrypt.genSalt(10,(erro,salt)=>{
+                    bcrypt.hash(novoUsuario.senha,salt,(errro,hash)=>{
+                        if(erro){
+                            req.flash("error_msg","Houve um erro durante o salvamento do usuario")
+                            res.redirect("/")
+                        }
+                        //atribuindo a senha hasheada
+                        novoUsuario.senha = hash
+
+                        novoUsuario.save().then(()=>{
+                            req.flash("success_msg", "Usuario criado com sucesso")
+                            res.redirect("/")
+                        }).catch((erro)=>{
+                            req.flash("error_msg","Houve um erro ao criar o usuario, tente novamente")
+                            res.redirect('/user/registro')
+                        })
+                    })
+                })
+
+
+            }
+        }).catch((erro)=>{
+            req.flash("erros_msg","Houve um erro interno")
+            res.redirect("/")
+        })
     }
 
+})
+
+//formulario de login
+router.get('/login',(req,res)=>{
+    res.render('usuarios/login')
 })
 
 
