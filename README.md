@@ -22,3 +22,10 @@ http://localhost:5050/user/loja
 Administrador 
 http://localhost:5050/admin/produtos
 ```
+### As rotas são:
+```sh
+Entrar como Administrador para cadastrar produtos:
+login: admin@admin.com
+senha: 1234
+```
+
