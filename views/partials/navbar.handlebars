@@ -4,11 +4,18 @@
                 <div>
                     <div class="row row1">
                         <ul class="largenav pull-right">
+                            {{#if user}}
+
+                            {{else}}
                             <li class="upper-links">
                                 <div id="login">
-                                    <a class="links" href="">LOGIN / CADASTRE-SE</a>
+                                    <a class="links" href="/user/login">LOGIN</a>
+                                </div>
+                                <div id="login">
+                                    <a class="links" href="/user/registro">CADASTRE-SE</a>
                                 </div>
                             </li>
+                            {{/if}}
                             <li class="upper-links">
                                 <a class="links" href="">Telefonia</a>
                             </li>

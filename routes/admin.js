@@ -3,9 +3,10 @@ const router = express.Router()
 const mongoose = require('mongoose') //carrega o modulo monggose
 require("../models/produto") // importa a tabela produto da pasta models
 const Produto = mongoose.model("produtos") // atribui a constante produto a tabela produtos
+const {eAdmin}= require('../helpers/eAdmin')
 
 // read
-router.get('/produtos',(req,res)=>{
+router.get('/produtos',eAdmin,(req,res)=>{
     Produto.find().sort({date:'desc'}).then((produtos)=>{
         res.render('admin/produtos',{produtos:produtos})
     }).catch((erro)=>{
@@ -14,12 +15,12 @@ router.get('/produtos',(req,res)=>{
     })
 })
 
-router.get('/produtos/add',(req,res)=>{
+router.get('/produtos/add', eAdmin,(req,res)=>{
     res.render('admin/addprodutos')
 })
 
 // create
-router.post('/produtos/novo',(req,res)=>{
+router.post('/produtos/novo', eAdmin, (req,res)=>{
     var erros = [];
 
     if(!req.body.nome || typeof req.body.nome == undefined|| req.body.nome == null){
@@ -58,7 +59,7 @@ router.post('/produtos/novo',(req,res)=>{
 })
 
 //update
-router.get('/produtos/edit/:id',(req,res)=>{
+router.get('/produtos/edit/:id', eAdmin,(req,res)=>{
     Produto.findOne({_id: req.params.id}).then((produto)=> {
         res.render('admin/editprodutos',{produto:produto})
     }).catch((erro)=> {
@@ -67,7 +68,7 @@ router.get('/produtos/edit/:id',(req,res)=>{
     })
 })
 
-router.post('/produtos/edit',(req,res)=>{
+router.post('/produtos/edit', eAdmin,(req,res)=>{
     var erros = [];
 
     if(!req.body.nome || typeof req.body.nome == undefined|| req.body.nome == null){
@@ -112,7 +113,7 @@ router.post('/produtos/edit',(req,res)=>{
 })
 
 //delete
-router.post('/produtos/deletar',(req,res)=>{
+router.post('/produtos/deletar', eAdmin,(req,res)=>{
     Produto.remove({_id:req.body.id}).then(()=>{
         req.flash('success_msg', "Produto removido com sucesso")
         res.redirect('/admin/produtos')
